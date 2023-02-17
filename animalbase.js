@@ -31,13 +31,20 @@ function clickButtons(){
 function filterClick(event){
     let filteredList;
     globalObjectInput.filter = event.target.dataset.filter;
-    if (globalObjectInput.filter === "cat") {
-        filteredList = allAnimals.filter(whichAnimal);
-    }  else if (globalObjectInput.filter === "dog") {
-        filteredList = allAnimals.filter(whichAnimal);
-    } else if (globalObjectInput.filter === "*") {
+    //i could have that in a different function
+    if (globalObjectInput.filter !== "*") {
+        filteredList = allAnimals.filter(whichAnimal)
+    }
+    else {
         filteredList = allAnimals;
-    };
+    }
+    // if (globalObjectInput.filter === "cat") {
+    //     filteredList = allAnimals.filter(whichAnimal);
+    // }  else if (globalObjectInput.filter === "dog") {
+    //     filteredList = allAnimals.filter(whichAnimal);
+    // } else if (globalObjectInput.filter === "*") {
+    //     filteredList = allAnimals;
+    // };
     displayList(filteredList);
 }
     
@@ -68,7 +75,7 @@ async function loadJSON() {
 }
 
 function prepareObjects( jsonData ) {
-    allAnimals = jsonData.map( preapareObject );
+    allAnimals = jsonData.map( preapareObject ); //it can be done with foEach but it needs a different syntax
     displayList(allAnimals);
 }
 
