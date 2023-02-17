@@ -3,7 +3,8 @@
 window.addEventListener("DOMContentLoaded", start);
 
 let allAnimals = [];
-let animalChosen = "";
+//let animalChosen = "";
+const  globalObjectInput = {filter: ""} // its better to create a global variable to store your inputs
 
 // The prototype for all animals: 
 const Animal = {
@@ -29,19 +30,19 @@ function clickButtons(){
 // ---------------------FILTERING---------------------------
 function filterClick(event){
     let filteredList;
-    animalChosen = event.target.dataset.filter;
-    if (animalChosen === "cat") {
+    globalObjectInput.filter = event.target.dataset.filter;
+    if (globalObjectInput.filter === "cat") {
         filteredList = allAnimals.filter(whichAnimal);
-    }  else if (animalChosen === "dog") {
+    }  else if (globalObjectInput.filter === "dog") {
         filteredList = allAnimals.filter(whichAnimal);
-    } else if (animalChosen === "*") {
+    } else if (globalObjectInput.filter === "*") {
         filteredList = allAnimals;
     };
     displayList(filteredList);
 }
     
 function whichAnimal(animal){
-    if (animal.type === animalChosen ){
+    if (animal.type === globalObjectInput.filter ){
         return true;
     }else{
         return false;
