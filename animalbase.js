@@ -75,6 +75,14 @@ function sortClick(event){
     const sortBy = event.target.dataset.sort;
     const sortDir = event.target.dataset.sortDirection;
 
+    //find "old" sortby element and remove .sortBy
+    const oldElement = document.querySelector(`[data-sort=${settings.sortBy}]`);
+    oldElement.classList.remove("sortby");
+
+
+    //indicate active sort
+    event.target.classList.add("sortby");
+
     //toggle the direction
     if(sortDir === "asc"){
         event.target.dataset.sortDirection = "desc";
