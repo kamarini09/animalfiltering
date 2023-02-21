@@ -3,8 +3,6 @@
 window.addEventListener("DOMContentLoaded", start);
 
 let allAnimals = [];
-//let animalChosen = "";
-//const  globalObjectInput = {filter: ""} // its better to create a global variable to store your inputs but we dont need it now
 
 // The prototype for all animals: 
 const Animal = {
@@ -26,6 +24,10 @@ function clickButtons(){
     document.querySelectorAll(".filter").forEach((each) =>{
         each.addEventListener("click", filterClick);
     });
+
+    document.querySelectorAll("[data-action=sort]").forEach((each) =>{
+        each.addEventListener("click", sortClick);
+    }); 
    
 }
 // ---------------------FILTERING---------------------------
@@ -44,9 +46,41 @@ function filterClick(event){
         filteredList = allAnimals;
     }
     displayList(filteredList);
+   
+}
+
+
+// ---------------------SORTING---------------------------
+
+function sortClick(event){
+
+    const sortBy = event.target.dataset.sort;
+    console.log(`user selected ${sortBy}`)
+    sortList(sortBy)
+    
+    
+}
+
+
+
+function sortList(sortBy){
+     let sortedList = allAnimals;
+    
+     sortedList = sortedList.sort(sortByInput);
+    
+      function sortByInput(animalA, animalB){
+        console.log(`sorted by ${sortBy}`)
+        if(animalA[sortBy]   < animalB[sortBy]){
+            return -1;
+        }else{
+            return 1;
+        }
+    }
+     displayList(sortedList);
+    
+       
 }
     
-
 
 
 //-------------------------- OBJECT FROM DATABASE ---------------
@@ -86,6 +120,8 @@ function displayList(animals) {
 
     // build a new list
     animals.forEach( displayAnimal );
+   
+    
 }
 
 function displayAnimal( animal ) {
@@ -108,10 +144,12 @@ function displayAnimal( animal ) {
      // TODO: Add event listener to click on star
    
      clone.querySelector("[data-field=star]").addEventListener('click' ,changeStar);
+    
    
      function changeStar(){
         animal.star =!animal.star;
         buildList();
+        
      }
 
     // append clone to list
