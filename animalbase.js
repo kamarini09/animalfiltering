@@ -11,7 +11,8 @@ const Animal = {
     name: "",
     desc: "-unknown animal-",
     type: "",
-    age: 0
+    age: 0 ,
+    star: false
 };
 
 function start( ) {
@@ -31,7 +32,7 @@ function clickButtons(){
 function filterClick(event){
     let filteredList;
     if (event.target.dataset.filter !== "*") {
-        filteredList = allAnimals.filter(function whichAnimal(animal){
+        filteredList = allAnimals.filter(function whichAnimal(animal){ //its a differnet way with closure
             if (animal.type === event.target.dataset.filter ){
                 return true;
             }else{
@@ -45,42 +46,7 @@ function filterClick(event){
     displayList(filteredList);
 }
     
-//--------previous way--------------------------
-// function filterClick(event){
-//     let filteredList;
-//     globalObjectInput.filter = event.target.dataset.filter;
-//     //i could have that in a different function
-//     if (globalObjectInput.filter !== "*") {
-//         filteredList = allAnimals.filter(whichAnimal)
-//     }
-//     else {
-//         filteredList = allAnimals;
-//     }
-    // if (globalObjectInput.filter === "cat") {
-    //     filteredList = allAnimals.filter(whichAnimal);
-    // }  else if (globalObjectInput.filter === "dog") {
-    //     filteredList = allAnimals.filter(whichAnimal);
-    // } else if (globalObjectInput.filter === "*") {
-    //     filteredList = allAnimals;
-    // };
-//     displayList(filteredList);
-// }
-    
-// function whichAnimal(animal){
-//     if (animal.type === globalObjectInput.filter ){
-//         return true;
-//     }else{
-//         return false;
-//     }
-// }
-//instead of this for each animal i did the previous function
-// function isCat(animal){
-//     if (animal.type === "cat" ){
-//         return true;
-//     }else{
-//         return false;
-//     }
-// }
+
 
 
 //-------------------------- OBJECT FROM DATABASE ---------------
@@ -107,6 +73,12 @@ function preapareObject( jsonObject ) {
     return animal;
 }
 
+function buildList() {
+    const currentList = allAnimals; // FUTURE: Filter and sort currentList before displaying
+
+    displayList( currentList );
+}
+
 //--------------------------DISPLAY-----------------------------
 function displayList(animals) {
     // clear the list
@@ -121,10 +93,26 @@ function displayAnimal( animal ) {
     const clone = document.querySelector("template#animal").content.cloneNode(true);
 
     // set clone data
+    // TODO: Show star ⭐ or ☆
+    if(animal.star){
+        clone.querySelector("[data-field=star]").textContent = "⭐";
+
+    }else{
+        clone.querySelector("[data-field=star]").textContent = "☆";
+    }
     clone.querySelector("[data-field=name]").textContent = animal.name;
     clone.querySelector("[data-field=desc]").textContent = animal.desc;
     clone.querySelector("[data-field=type]").textContent = animal.type;
     clone.querySelector("[data-field=age]").textContent = animal.age;
+
+     // TODO: Add event listener to click on star
+   
+     clone.querySelector("[data-field=star]").addEventListener('click' ,changeStar);
+   
+     function changeStar(){
+        animal.star =!animal.star;
+        buildList();
+     }
 
     // append clone to list
     document.querySelector("#list tbody").appendChild( clone );
