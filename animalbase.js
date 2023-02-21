@@ -4,7 +4,7 @@ window.addEventListener("DOMContentLoaded", start);
 
 let allAnimals = [];
 //let animalChosen = "";
-const  globalObjectInput = {filter: ""} // its better to create a global variable to store your inputs
+//const  globalObjectInput = {filter: ""} // its better to create a global variable to store your inputs but we dont need it now
 
 // The prototype for all animals: 
 const Animal = {
@@ -30,14 +30,32 @@ function clickButtons(){
 // ---------------------FILTERING---------------------------
 function filterClick(event){
     let filteredList;
-    globalObjectInput.filter = event.target.dataset.filter;
-    //i could have that in a different function
-    if (globalObjectInput.filter !== "*") {
-        filteredList = allAnimals.filter(whichAnimal)
+    if (event.target.dataset.filter !== "*") {
+        filteredList = allAnimals.filter(function whichAnimal(animal){
+            if (animal.type === event.target.dataset.filter ){
+                return true;
+            }else{
+                return false;
+            }
+        })
     }
     else {
         filteredList = allAnimals;
     }
+    displayList(filteredList);
+}
+    
+//--------previous way--------------------------
+// function filterClick(event){
+//     let filteredList;
+//     globalObjectInput.filter = event.target.dataset.filter;
+//     //i could have that in a different function
+//     if (globalObjectInput.filter !== "*") {
+//         filteredList = allAnimals.filter(whichAnimal)
+//     }
+//     else {
+//         filteredList = allAnimals;
+//     }
     // if (globalObjectInput.filter === "cat") {
     //     filteredList = allAnimals.filter(whichAnimal);
     // }  else if (globalObjectInput.filter === "dog") {
@@ -45,16 +63,16 @@ function filterClick(event){
     // } else if (globalObjectInput.filter === "*") {
     //     filteredList = allAnimals;
     // };
-    displayList(filteredList);
-}
+//     displayList(filteredList);
+// }
     
-function whichAnimal(animal){
-    if (animal.type === globalObjectInput.filter ){
-        return true;
-    }else{
-        return false;
-    }
-}
+// function whichAnimal(animal){
+//     if (animal.type === globalObjectInput.filter ){
+//         return true;
+//     }else{
+//         return false;
+//     }
+// }
 //instead of this for each animal i did the previous function
 // function isCat(animal){
 //     if (animal.type === "cat" ){
