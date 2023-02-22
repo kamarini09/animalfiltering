@@ -5,7 +5,7 @@ window.addEventListener("DOMContentLoaded", start);
 let allAnimals = [];
 
 let settings = {
-    filterBy:"all",
+    filterBy:"*",
     sortBy: "name",
     sortDir: "asc"
 }
@@ -61,9 +61,7 @@ function filterList(filteredList){
             }
         })
     }
-    else {
-        filteredList = allAnimals;
-    }
+
     return filteredList;
    
 }
@@ -159,6 +157,7 @@ function preapareObject( jsonObject ) {
 function buildList() {
     const currentList = filterList(allAnimals);
     let sortedList = sortList(currentList);
+
 
     displayList(sortedList);
 }
