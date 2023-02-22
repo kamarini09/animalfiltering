@@ -141,7 +141,8 @@ async function loadJSON() {
 
 function prepareObjects( jsonData ) {
     allAnimals = jsonData.map( preapareObject ); //it can be done with foEach but it needs a different syntax
-    displayList(allAnimals);
+    //displayList(allAnimals);
+    buildList();
 }
 
 function preapareObject( jsonObject ) {
